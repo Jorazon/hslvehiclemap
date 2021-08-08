@@ -1,6 +1,4 @@
-# map_app
-
-Helsinki Regional Transport vehicle tracker map
+# Helsinki Regional Transport vehicle tracker map
 
 ![Picture of the map](demo.png)
 
