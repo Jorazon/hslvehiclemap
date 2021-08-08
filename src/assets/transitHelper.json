@@ -1,0 +1,45 @@
+{
+	"operators": {
+		"6" :{"name":"Oy Pohjolan Liikenne Ab", "color":"#440579"},
+		"12":{"name":"Helsingin Bussiliikenne Oy", "color":"#144e90"},
+		"17":{"name":"Tammelundin Liikenne Oy", "color":"#1172a5"},
+		"18":{"name":"Pohjolan Kaupunkiliikenne Oy", "color":"#440579"},
+		"20":{"name":"Bus Travel Åbergin Linja Oy", "color":"#aa8e3e"},
+		"21":{"name":"Bus Travel Oy Reissu Ruoti", "color":"#c2b292"},
+		"22":{"name":"Nobina Finland Oy", "color":"#b7c900"},
+		"30":{"name":"Savonlinja Oy", "color":"#f2ad01"},
+		"36":{"name":"Nurmijärven Linja Oy", "color":"#f4de22"},
+		"40":{"name":"HKL-Raitioliikenne", "color":"#00a663"},
+		"45":{"name":"Transdev Vantaa Oy", "color":"#f70000"},
+		"47":{"name":"Taksikuljetus Oy", "color":"#020202"},
+		"50":{"name":"HKL-Metroliikenne", "color":"#ed7e1e"},
+		"51":{"name":"Korsisaari Oy", "color":"#c40510"},
+		"54":{"name":"V-S Bussipalvelut Oy", "color":"#b7953e"},
+		"55":{"name":"Transdev Helsinki Oy", "color":"#f70000"},
+		"58":{"name":"Koillisen Liikennepalvelut Oy", "color":"#2771c9"},
+		"60":{"name":"Suomenlinnan Liikenne Oy", "color":"#00b3dd"},
+		"59":{"name":"Tilausliikenne Nikkanen Oy", "color":"#d3cec9"},
+		"89":{"name":"Metropolia", "color":"#f26522"},
+		"90":{"name":"VR Oy", "color":"#5fb32a"}
+	},
+	"transport_mode": {
+		"bus"     :{"color":"#007ac9"},
+		"tram"    :{"color":"#00985f"},
+		"train"   :{"color":"#8c4799"},
+		"metro"   :{"color":"#ff6319"},
+		"ferry"   :{"color":"#00b9e4"},
+		"ubus"    :{"color":"#0079c8"},
+		"robot"   :{"color":"#f26522"},
+		"citybike":{"color":"#f2b62d"},
+		"walk"    :{"color":"#6ba3af"}
+	},
+	"jl_laji": {
+		"01":"bus",
+		"02":"tram",
+		"06":"metro",
+		"07":"ferry",
+		"08":"ubus",
+		"12":"train",
+		"21":"bus"
+	}
+}
