@@ -2,6 +2,8 @@
 
 Helsinki Regional Transport vehicle tracker map
 
+![Picture of the map](demo.png)
+
 ## Project setup
 
 ```
