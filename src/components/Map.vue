@@ -20,7 +20,6 @@
 			<ol-source-vector>
 				<ol-feature v-for="[key, vehicle] in vehicles" :key="key">
 					<ol-geom-point
-						class="{{vehicle.type}}"
 						:coordinates="
 							epsg4326toepsg3857([
 								vehicle.latitude,
@@ -29,11 +28,20 @@
 						"
 					/>
 					<ol-style>
-						<ol-style-icon
-							:src="markerIcon"
-							:scale="0.1"
-							:rotation="vehicle.heading"
-						/>
+						<!--ol-style-icon :src="markerIcon" :scale="0.15"
+						:rotation="(vehicle.heading * Math.PI) / 180.0" /-->
+						<ol-style-circle :radius="12">
+							<ol-style-fill
+								:color="
+									transport.transport_mode[vehicle.type].color
+								"
+							></ol-style-fill>
+							<ol-style-stroke
+								color="black"
+								:width="1"
+							></ol-style-stroke>
+						</ol-style-circle>
+						<ol-style-text :text="vehicle.designation" />
 					</ol-style>
 				</ol-feature>
 			</ol-source-vector>
@@ -42,12 +50,20 @@
 </template>
 
 <script>
+//transport.tranport_mode[vehicle.type].color
 import { ref } from "vue";
 import { epsg4326toepsg3857 } from "@/js/helperFunctions.mjs";
 import markerIcon from "@/assets/logo.png";
+import json from "@/assets/transitHelper.json";
 
 export default {
 	name: "Map",
+	data() {
+		return {
+			vehicles: {},
+			transport: json,
+		};
+	},
 	setup() {
 		const projection = ref("EPSG:3857");
 		const center = ref(epsg4326toepsg3857([24.94, 60.24]));
@@ -68,6 +84,8 @@ export default {
 	created() {
 		this.vehicles = new Map();
 
+		console.log(this.transport.transport_mode["bus"].color);
+
 		const mqtt = require("mqtt");
 		const client = mqtt.connect("wss://mqtt.hsl.fi:443/");
 
@@ -77,7 +95,7 @@ export default {
 			});
 		});
 		client.on("message", (topic, message) => {
-			//client.end();
+			if (this.vehicles.size > 5000) client.end();
 
 			topic = topic.split("/");
 			message = JSON.parse(message).VP;
@@ -93,7 +111,7 @@ export default {
 				operator: message.oper,
 				number: message.veh,
 				speed: message.spd * 3.6, // km/h
-				heading: (message.hdg * Math.PI) / 180.0, // deg
+				heading: message.hdg, // deg
 				latitude: message.long, // deg
 				longitude: message.lat, // deg
 				acceleration: message.acc, // m/s^2
@@ -104,11 +122,6 @@ export default {
 
 			this.vehicles.set(vehicle.uid, vehicle);
 		});
-	},
-	data() {
-		return {
-			vehicles: {},
-		};
 	},
 	methods: {
 		epsg4326toepsg3857,
