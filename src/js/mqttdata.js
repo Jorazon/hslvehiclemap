@@ -8,7 +8,7 @@ const updateFPS = 2; //times per second to update vehicles on map
 
 async function main() {
 	//main function needed for async file read with fetchJSON()
-	client = new Mosquitto(); //create new client
+	const client = new Mosquitto(); //create new client
 
 	transithelper = await fetchJSON("transitHelper.json"); //read transithelper.json
 

@@ -18,8 +18,9 @@
 
 		<ol-vector-layer>
 			<ol-source-vector>
-				<ol-feature v-for="(vehicle, index) in vehicles" :key="index">
+				<ol-feature v-for="[key, vehicle] in vehicles" :key="key">
 					<ol-geom-point
+						class="{{vehicle.type}}"
 						:coordinates="
 							epsg4326toepsg3857([
 								vehicle.latitude,
@@ -44,6 +45,7 @@
 import { ref } from "vue";
 import { epsg4326toepsg3857 } from "@/js/helperFunctions.mjs";
 import markerIcon from "@/assets/logo.png";
+
 export default {
 	name: "Map",
 	setup() {
@@ -63,25 +65,49 @@ export default {
 			markerIcon,
 		};
 	},
+	created() {
+		this.vehicles = new Map();
+
+		const mqtt = require("mqtt");
+		const client = mqtt.connect("wss://mqtt.hsl.fi:443/");
+
+		client.on("connect", () => {
+			client.subscribe("/hfp/v2/journey/ongoing/vp/#", (err) => {
+				if (err) console.log(err);
+			});
+		});
+		client.on("message", (topic, message) => {
+			client.end();
+
+			topic = topic.split("/");
+			message = JSON.parse(message).VP;
+
+			let vehicle = {
+				uid: `${topic[7]}/${topic[8]}`,
+				type: topic[6],
+				route: topic[9],
+				direction: topic[10],
+				destination: topic[11],
+				nextStop: `HSL:${topic[13]}`,
+				designation: message.desi,
+				operator: message.oper,
+				number: message.veh,
+				speed: message.spd * 3.6, // km/h
+				heading: (message.hdg * Math.PI) / 180.0, // deg
+				latitude: message.long, // deg
+				longitude: message.lat, // deg
+				acceleration: message.acc, // m/s^2
+				delay: message.dl, // s (<0: behind, >0: ahead)
+				doors: message.drst, // 0: closed 1: open
+				label: message.label, //ferry name
+			};
+
+			this.vehicles.set(vehicle.uid, vehicle);
+		});
+	},
 	data() {
 		return {
-			vehicles: [
-				{
-					designation: "551",
-					direction: "1",
-					operator: 12,
-					number: 10,
-					speed: 1, // m/s
-					heading: 45,
-					latitude: 24.94,
-					longitude: 60.24,
-					acceleration: 0, // m/s^2
-					delay: -60,
-					doors: 0,
-					route: "2551",
-					label: "lautta",
-				},
-			],
+			vehicles: {},
 		};
 	},
 	methods: {
@@ -97,5 +123,8 @@ export default {
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+.bus {
+	filter: ;
 }
 </style>
