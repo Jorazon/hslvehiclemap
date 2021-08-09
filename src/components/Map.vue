@@ -77,7 +77,7 @@ export default {
 			});
 		});
 		client.on("message", (topic, message) => {
-			client.end();
+			//client.end();
 
 			topic = topic.split("/");
 			message = JSON.parse(message).VP;
