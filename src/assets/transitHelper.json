@@ -20,7 +20,8 @@
 		"60": { "name": "Suomenlinnan Liikenne Oy", "color": "#00b3dd" },
 		"59": { "name": "Tilausliikenne Nikkanen Oy", "color": "#d3cec9" },
 		"89": { "name": "Metropolia", "color": "#f26522" },
-		"90": { "name": "VR Oy", "color": "#5fb32a" }
+		"90": { "name": "VR", "color": "#5fb32a" },
+		"91": { "name": "VR Kaukoliikenne", "color": "#FF6F59" }
 	},
 	"transport_mode": {
 		"bus": { "color": "#007ac9" },
