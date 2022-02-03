@@ -14,15 +14,9 @@ function arcgisTOgeojson(geometry) {
 		geometry.paths.forEach((path) => {
 			for (let i = 1; i < path.length; i++) {
 				if (i == 1) {
-					wholePath.push([
-						fromLonLat(path[i - 1]),
-						fromLonLat(path[i]),
-					]);
+					wholePath.push([fromLonLat(path[i - 1]), fromLonLat(path[i])]);
 				} else {
-					wholePath.push([
-						wholePath[wholePath.length - 1][1],
-						fromLonLat(path[i]),
-					]);
+					wholePath.push([wholePath[wholePath.length - 1][1], fromLonLat(path[i])]);
 				}
 			}
 		});
@@ -67,9 +61,8 @@ async function getPath(number, dir) {
 	let path = new ol.format.GeoJSON().readFeatures(geojson); //geometry source is fetch result, projection is same as in query
 
 	let shapecolor =
-		transithelper.transport_mode[
-			transithelper.jl_laji[result.features[0].attributes.JL_LAJI]
-		].color; //get color from transithelper based on query jl_laji
+		transithelper.transport_mode[transithelper.jl_laji[result.features[0].attributes.JL_LAJI]]
+			.color; //get color from transithelper based on query jl_laji
 
 	//create style
 	let linestyle = new ol.style.Style({

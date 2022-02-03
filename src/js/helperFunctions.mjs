@@ -4,7 +4,7 @@
  * @param {number[]} latlon EPSG:4326 longitude latitude coordinates
  * @returns {number[]} EPSG:3857 position
  */
-export function epsg4326toepsg3857(latlon) {
+function epsg4326toepsg3857(latlon) {
 	let coordinates = [...latlon];
 
 	let smRadius = 6378136.98;
@@ -29,6 +29,12 @@ export function epsg4326toepsg3857(latlon) {
 	return coordinates;
 }
 
-export function capitalize(string) {
+function capitalize(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+function degToRad(deg) {
+	return (deg * Math.PI) / 180.0;
+}
+
+export { epsg4326toepsg3857, capitalize, degToRad };
